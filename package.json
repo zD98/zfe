@@ -1,0 +1,26 @@
+{
+  "name": "zfe",
+  "version": "0.0.1",
+  "description": "zd98-fe-setpackage",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "zfe": "./bin/zfe.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zD98/zfe.git"
+  },
+  "author": "zd98",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zD98/zfe/issues"
+  },
+  "homepage": "https://github.com/zD98/zfe#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
+  }
+}
