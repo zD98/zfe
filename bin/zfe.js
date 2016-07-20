@@ -32,4 +32,12 @@ program
     process.argv.splice(2, 1);
     require('gulp/bin/gulp')
   })
+
+program
+  .command('server')
+  .action(function(){
+    //process.argv.splice(2,1);
+    require('gulp/bin/gulp')
+  })
+
 program.parse(process.argv);
