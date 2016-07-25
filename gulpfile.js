@@ -10,7 +10,7 @@ var projpath = process.env.projpath;
 
 gulp.task('server', function() {
     connect.server({
-        
+        root:projpath
     });
 })
 

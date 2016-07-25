@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var program = require('commander');
+var path = require('path');
 
 process.env.projpath = process.cwd();
 
