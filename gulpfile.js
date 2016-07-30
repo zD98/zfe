@@ -39,4 +39,5 @@ gulp.task('babel', function() {
 gulp.task('watch', function() {
     gulp.watch('./es6.js', ['babel', 'lint']);
 })
+
 gulp.task('default', ['babel', 'lint', 'watch']);
