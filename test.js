@@ -35,7 +35,7 @@ gulp.task('readFile',function(callback) {
                     var path = paths[i];
                     var ext = getFileExt(path);
                     if (['.html', '.css'].indexOf(ext) !== -1) {
-                        contentArr.push(fileContentToStr(fs.readFileSync(path, "utf8"), getFileExt(path) === ".html", path));
+                        contentArr.push(fileContentToStr(fs.readFileSync(path, "utf8"), getFileExt(path) === ".html", path, key));
                     }
                 }
                 contentArr.push(fs.readFileSync("src/component/" + key + "/index.js", "utf8"));
@@ -72,7 +72,7 @@ gulp.task('fixUtil', function () {
     return gulp.src('fix/app.js').pipe(gulp.dest('dev/js'));
 });
 gulp.task('copyAsset', function () {
-return gulp.src('src/asset/*')
+  return gulp.src('src/asset/*')
     .pipe(gulp.dest('dev/asset'))
     .pipe(gulp.dest('dist/asset'))
 });
@@ -184,31 +184,24 @@ function getFileExt(filename) {
     var index2 = filename.length;
     return filename.substring(index1, index2).toLowerCase();
 }
-
-function  fileContentToStr(r ,isTpl ,path) {
+//Todo, 将css压缩到JS中, 使用流处理. 输出到JS中
+function  fileContentToStr(r ,isTpl ,path, key) {
     var strVar =isTpl? "tpl":"css";
     var g = "";
     var vf = new vFile({
-              cwd: "/",
-              base: "/",
-              path: path,
-              contents: new Buffer(r)
+              path: path
         });
-    console.log(path);
-    console.log(JSON.stringify(vf));
-    spriteOutput = vf.pipe(sprite({
+    spriteOutput = gulp.src(path).pipe(sprite({
 
                 spriteSheetName: "sprite.png",
                 baseUrl:'./src/',
-                spriteSheetPath:"component/read_num"
-        
+                spriteSheetPath:"component/"+key
+
             }));
 
-    spriteOutput.css.pipe(gulp.dest("./dev/component/read_num/"));
-    spriteOutput.img.pipe(gulp.dest("./dev/component/read_num/"));
-    console.log(spriteOutput.css);
-
-
+    spriteOutput.css.pipe(gulp.dest("./dev/component/"+key)); //将输出的流进行处理
+    spriteOutput.img.pipe(gulp.dest("./dev/component/"+key));
+    console.log(spriteOutput.css.contents);
     var arr = r.replace(/\r/g, "").replace(/^[\s\uFEFF\xa0\u3000]+|[\uFEFF\xa0\u3000\s]+$/g, "").split("\n");
     g += "App.componentRes['"+path.substring(4,path.length)+"'] =\n";
     var i = 0;
